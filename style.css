@@ -1,0 +1,683 @@
+/* ================================
+   Global Pastel Glass Theme
+   ================================ */
+
+:root {
+    --bg-gradient-start: #ffeaf5;
+    --bg-gradient-end: #e4f3ff;
+    --card-bg: rgba(255, 255, 255, 0.88);
+    --card-border: rgba(255, 255, 255, 0.7);
+    --accent: #ff8ac9;
+    --accent-soft: #ffd5ec;
+    --accent-2: #8c9fff;
+    --accent-3: #9ef1ff;
+    --text-main: #22223b;
+    --text-muted: #6a6c8f;
+    --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.16);
+    --radius-lg: 24px;
+    --transition-fast: 0.2s ease-out;
+    --transition-med: 0.35s ease;
+}
+
+/* Dark mode overrides using CSS variables */
+body.dark-theme {
+    --bg-gradient-start: #050816;
+    --bg-gradient-end: #0b1020;
+    --card-bg: rgba(15, 23, 42, 0.85);
+    --card-border: rgba(148, 163, 184, 0.4);
+    --text-main: #f9fafb;
+    --text-muted: #cbd5f5;
+    --shadow-soft: 0 20px 50px rgba(0, 0, 0, 0.55);
+}
+
+/* ================================
+   Base Layout
+   ================================ */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: var(--text-main);
+    background: radial-gradient(circle at top left, var(--bg-gradient-start), transparent 50%),
+                radial-gradient(circle at bottom right, var(--bg-gradient-end), transparent 50%),
+                linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
+    background-size: 200% 200%;
+    animation: gradientShift 20s ease-in-out infinite;
+}
+
+/* Smooth fade-in for whole page */
+body {
+    opacity: 0;
+    animation: bodyFade 0.8s ease-out forwards;
+}
+
+/* Center content with a max width */
+main {
+    max-width: 1100px;
+    padding: 2.5rem 1.5rem 3.5rem;
+    margin: 4.5rem auto 3.5rem;
+}
+
+/* For pages that already use .page */
+.page {
+    max-width: 1100px;
+    margin: 4.5rem auto 3.5rem;
+    padding: 0 1.5rem;
+}
+
+/* ================================
+   Navbar (Glassmorphism)
+   ================================ */
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+.navbar {
+    max-width: 1100px;
+    margin: 1rem auto 0;
+    padding: 0.85rem 1.5rem;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+
+    background: linear-gradient(
+        120deg,
+        rgba(255, 255, 255, 0.92),
+        rgba(255, 255, 255, 0.78)
+    );
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 0 14px 40px rgba(148, 163, 184, 0.35);
+    backdrop-filter: blur(16px);
+}
+
+body.dark-theme .navbar {
+    background: linear-gradient(
+        120deg,
+        rgba(15, 23, 42, 0.94),
+        rgba(15, 23, 42, 0.8)
+    );
+    border-color: rgba(148, 163, 184, 0.5);
+}
+
+.logo {
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 0.95rem;
+    color: var(--text-main);
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 1.3rem;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-links a {
+    position: relative;
+    text-decoration: none;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 600;
+    padding-bottom: 0.15rem;
+    transition: color var(--transition-fast);
+}
+
+.nav-links a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -0.25rem;
+    width: 0;
+    height: 2px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    transition: width 0.25s ease-out;
+}
+
+.nav-links a:hover {
+    color: var(--text-main);
+}
+
+.nav-links a:hover::after,
+.nav-links a.active::after {
+    width: 100%;
+}
+
+.nav-links a.active {
+    color: var(--text-main);
+}
+
+/* Theme toggle button */
+
+#themeToggle {
+    border: none;
+    outline: none;
+    border-radius: 999px;
+    width: 36px;
+    height: 36px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    background: radial-gradient(circle at 20% 20%, var(--accent-soft), transparent 60%);
+    box-shadow: 0 10px 25px rgba(248, 180, 217, 0.7);
+    transition: transform 0.15s ease-out, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+#themeToggle:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 14px 35px rgba(248, 180, 217, 0.85);
+}
+
+body.dark-theme #themeToggle {
+    background: radial-gradient(circle at 30% 25%, #facc15, transparent 60%);
+    box-shadow: 0 12px 26px rgba(250, 204, 21, 0.75);
+}
+
+/* ================================
+   Hero Section (Home Page)
+   ================================ */
+
+.hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.1fr);
+    gap: 2rem;
+    align-items: center;
+    margin-top: 3.5rem;
+}
+
+.hero-text h1 {
+    font-size: clamp(2.2rem, 3vw + 1rem, 2.9rem);
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    background: linear-gradient(120deg, #ff8ac9, #8b5cf6, #0ea5e9);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.hero-text p {
+    font-size: 0.98rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+    max-width: 36rem;
+}
+
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+    margin-top: 1.7rem;
+}
+
+/* Buttons */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.6rem 1.3rem;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transition: transform var(--transition-fast), box-shadow var(--transition-med), background 0.25s ease, color 0.25s ease;
+}
+
+.btn.primary {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: #ffffff;
+    box-shadow: 0 16px 35px rgba(248, 113, 190, 0.6);
+}
+
+.btn.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 45px rgba(248, 113, 190, 0.8);
+}
+
+.btn.secondary {
+    background: rgba(255, 255, 255, 0.4);
+    color: var(--text-main);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
+}
+
+body.dark-theme .btn.secondary {
+    background: rgba(15, 23, 42, 0.8);
+    border-color: rgba(148, 163, 184, 0.6);
+    color: var(--text-muted);
+}
+
+.btn.secondary:hover {
+    transform: translateY(-2px);
+}
+
+/* Hero side card */
+
+.hero-card {
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--card-border);
+    box-shadow: var(--shadow-soft);
+    padding: 1.6rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(18px);
+    animation: floatCard 12s ease-in-out infinite;
+}
+
+.hero-card::before,
+.hero-card::after {
+    content: "";
+    position: absolute;
+    border-radius: 999px;
+    filter: blur(28px);
+    opacity: 0.9;
+}
+
+.hero-card::before {
+    width: 180px;
+    height: 180px;
+    background: radial-gradient(circle, var(--accent-soft), transparent 65%);
+    top: -60px;
+    right: -60px;
+}
+
+.hero-card::after {
+    width: 180px;
+    height: 160px;
+    background: radial-gradient(circle, var(--accent-3), transparent 65%);
+    bottom: -60px;
+    left: -60px;
+}
+
+.hero-card h2 {
+    margin: 0 0 0.9rem;
+    font-size: 1.1rem;
+}
+
+.hero-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-card li {
+    font-size: 0.95rem;
+    margin-bottom: 0.45rem;
+    color: var(--text-main);
+}
+
+.hero-card li strong {
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+/* ================================
+   Info Grid on Home Page
+   ================================ */
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+}
+
+.info-card {
+    background: var(--card-bg);
+    border-radius: 22px;
+    border: 1px solid var(--card-border);
+    padding: 1.3rem 1.2rem 1.4rem;
+    box-shadow: 0 16px 36px rgba(148, 163, 184, 0.4);
+    backdrop-filter: blur(16px);
+    position: relative;
+    overflow: hidden;
+}
+
+.info-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.5), transparent 55%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.info-card:hover::before {
+    opacity: 1;
+}
+
+.info-card h3 {
+    margin-top: 0;
+    margin-bottom: 0.6rem;
+    font-size: 1.02rem;
+}
+
+.info-card p,
+.info-card ul {
+    font-size: 0.93rem;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+/* ================================
+   Page Headers (Resume & Bio-Data)
+   ================================ */
+
+.page-header {
+    text-align: center;
+    margin: 2.2rem 0 2rem;
+}
+
+.page-header h1 {
+    font-size: 2rem;
+    margin-bottom: 0.3rem;
+    background: linear-gradient(120deg, #f973c9, #a855f7, #22c1c3);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.subtitle {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+}
+
+/* ================================
+   Resume Layout
+   ================================ */
+
+.resume-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.7fr);
+    gap: 1.6rem;
+    align-items: flex-start;
+}
+
+.resume-sidebar {
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--card-border);
+    box-shadow: var(--shadow-soft);
+    padding: 1.4rem 1.2rem;
+    backdrop-filter: blur(16px);
+}
+
+.profile-block + .profile-block {
+    margin-top: 1.2rem;
+}
+
+.profile-block h2 {
+    font-size: 1rem;
+    margin: 0 0 0.4rem;
+}
+
+.profile-block p,
+.profile-block li {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.profile-block ul {
+    padding-left: 1rem;
+    margin: 0.2rem 0 0;
+}
+
+.resume-main {
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--card-border);
+    box-shadow: var(--shadow-soft);
+    padding: 1.6rem 1.5rem 1.8rem;
+    backdrop-filter: blur(16px);
+}
+
+.resume-section + .resume-section {
+    margin-top: 1.3rem;
+}
+
+.resume-section h2 {
+    font-size: 1.05rem;
+    margin: 0 0 0.5rem;
+    position: relative;
+    padding-left: 0.8rem;
+}
+
+.resume-section h2::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.55rem;
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: linear-gradient(120deg, var(--accent), var(--accent-2));
+}
+
+/* ================================
+   Bio-Data Section
+   ================================ */
+
+.biodata-section {
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--card-border);
+    box-shadow: var(--shadow-soft);
+    padding: 1.7rem 1.5rem 1.8rem;
+    backdrop-filter: blur(18px);
+}
+
+/* Table styling (common) */
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.92rem;
+    margin-top: 0.3rem;
+    overflow: hidden;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.55);
+}
+
+body.dark-theme .data-table {
+    background: rgba(15, 23, 42, 0.85);
+}
+
+.data-table thead {
+    background: linear-gradient(135deg, var(--accent-soft), #dbeafe);
+}
+
+body.dark-theme .data-table thead {
+    background: linear-gradient(135deg, #1f2937, #111827);
+}
+
+.data-table th,
+.data-table td {
+    padding: 0.65rem 0.8rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.35);
+}
+
+.data-table th {
+    font-weight: 700;
+    font-size: 0.86rem;
+    color: var(--text-main);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.data-table tbody tr:hover {
+    background: linear-gradient(
+        90deg,
+        rgba(255, 232, 255, 0.6),
+        rgba(219, 234, 254, 0.7)
+    );
+    transition: background 0.22s ease-out;
+}
+
+body.dark-theme .data-table tbody tr:hover {
+    background: linear-gradient(
+        90deg,
+        rgba(30, 64, 175, 0.65),
+        rgba(15, 23, 42, 0.8)
+    );
+}
+
+.declaration {
+    margin-top: 1.4rem;
+    font-size: 0.92rem;
+    color: var(--text-muted);
+}
+
+.align-right {
+    text-align: right;
+    margin-top: 0.6rem;
+}
+
+/* ================================
+   Footer
+   ================================ */
+
+footer {
+    text-align: center;
+    font-size: 0.82rem;
+    padding: 1rem 1.5rem 1.4rem;
+    color: var(--text-muted);
+}
+
+/* ================================
+   Scroll Reveal Animations
+   ================================ */
+
+.reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+    transition:
+        opacity 0.7s cubic-bezier(0.19, 1, 0.22, 1),
+        transform 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.reveal-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* ================================
+   Keyframes
+   ================================ */
+
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 30%;
+    }
+    50% {
+        background-position: 100% 70%;
+    }
+    100% {
+        background-position: 0% 30%;
+    }
+}
+
+@keyframes floatCard {
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+@keyframes bodyFade {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ================================
+   Responsive
+   ================================ */
+
+@media (max-width: 900px) {
+    .navbar {
+        border-radius: 18px;
+    }
+
+    .hero {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .hero-card {
+        order: -1;
+    }
+
+    main,
+    .page {
+        margin-top: 4.2rem;
+    }
+
+    .resume-layout {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .nav-links {
+        display: none; /* simple compact version for tiny screens */
+    }
+
+    .navbar {
+        justify-content: space-between;
+    }
+
+    main,
+    .page {
+        padding-inline: 1rem;
+    }
+
+    .biodata-section,
+    .resume-main,
+    .resume-sidebar {
+        padding-inline: 1.1rem;
+    }
+
+    .data-table {
+        font-size: 0.86rem;
+    }
+}
+
+/* https://keen-sundae-35d4b7.netlify.app/ */
